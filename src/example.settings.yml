@@ -1,0 +1,10 @@
+---
+  api:
+    version: v1.0.0
+  service:
+    host: localhost
+    port: 5000
+    log_level: debug
+    debug: true
+  db:
+    connection: postgresql+asyncpg://test_user:test_password@localhost:5411/test1
