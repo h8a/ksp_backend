@@ -10,8 +10,14 @@ from resources.beneficiaries import BeneficiariesResource
 class Service(falcon.asgi.App):
 
     def __init__(self, *args, **kwargs) -> None:
+
+        self._cors_enable = True
+
         super(Service, self).__init__(
             middleware=[
+                falcon.CORSMiddleware(
+                    allow_credentials='*'
+                ),
                 HookDBMiddleware(cfg.db)
             ]
         )
