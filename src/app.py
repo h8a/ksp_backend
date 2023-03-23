@@ -23,5 +23,6 @@ class Service(falcon.asgi.App):
 
         self.add_route(f'/api/{cfg.api.version}/employees', employees_res)
         self.add_route(f'/api/{cfg.api.version}/employees'+'/{employee_id}', employees_res)
+        self.add_route(f'/api/{cfg.api.version}/employees'+'/{employee_id}', employees_res, suffix='get_employee')
         self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries', employees_beneficiaries_res)
         self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries'+'/{beneficiary_id}', employees_beneficiaries_res)
