@@ -9,7 +9,7 @@ from resources import BaseResource
 
 class BeneficiariesResource(BaseResource):
 
-    async def on_get(self, req, resp):
+    async def on_get_list_beneficiary(self, req, resp):
         beneficiaries_db = await EmployeesBeneficiariesModel.get_list_by(self.db.session, status='1')
 
         beneficiaries = [ beneficiary.as_dict for beneficiary in beneficiaries_db ]
@@ -20,7 +20,7 @@ class BeneficiariesResource(BaseResource):
             'data': beneficiaries
         }
 
-    async def on_post(self, req, resp):
+    async def on_post_create_beneficiary(self, req, resp):
 
         data = await req.get_media()
 
@@ -58,7 +58,7 @@ class BeneficiariesResource(BaseResource):
             'data': employee_beneficiary_db.as_dict
         }
 
-    async def on_delete(self, req, resp, beneficiary_id):
+    async def on_delete_delete_beneficiary(self, req, resp, beneficiary_id):
 
         try:
             await EmployeesBeneficiariesModel.update(
@@ -80,13 +80,14 @@ class BeneficiariesResource(BaseResource):
             'status': True
         }
 
-    async def on_put(self, req, resp, beneficiary_id):
+    async def on_put_put_beneficiary(self, req, resp, beneficiary_id):
         data = await req.get_media()
 
         if 'birthdate' in data.keys():
             data['birthdate'] = datetime.strptime(data.get('birthdate'), '%Y-%M-%d')
 
         try:
+            del data['id']
             await EmployeesBeneficiariesModel.update(
                 self.db.session,
                 id=str(beneficiary_id),

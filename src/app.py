@@ -29,9 +29,10 @@ class Service(falcon.asgi.App):
         employees_beneficiaries_res = BeneficiariesResource(db_manager=mgr)
 
         self.add_route(f'/api/{cfg.api.version}/employees', employees_res)
-        # self.add_route(f'/api/{cfg.api.version}/employees'+'/{employee_id}', employees_res)
         self.add_route(f'/api/{cfg.api.version}/employees'+'/{employee_id}/put', employees_res, suffix='put_employee')
         self.add_route(f'/api/{cfg.api.version}/employees'+'/{employee_id}/delete', employees_res, suffix='delete_employee')
         self.add_route(f'/api/{cfg.api.version}/employees'+'/{employee_id}/get', employees_res, suffix='get_employee')
-        self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries', employees_beneficiaries_res)
-        self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries'+'/{beneficiary_id}', employees_beneficiaries_res)
+        self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries/create', employees_beneficiaries_res, suffix='create_beneficiary')
+        self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries/list', employees_beneficiaries_res, suffix='list_beneficiary')
+        self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries/put'+'/{beneficiary_id}', employees_beneficiaries_res, suffix='put_beneficiary')
+        self.add_route(f'/api/{cfg.api.version}/employees/beneficiaries/delete'+'/{beneficiary_id}', employees_beneficiaries_res, suffix='delete_beneficiary')
