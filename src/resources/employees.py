@@ -19,6 +19,26 @@ class EmployeesResource(BaseResource):
             'data': employees
         }
 
+    async def on_get_get_employee(self, req, resp, employee_id):
+
+        employees_db = await EmployeesModel.get_list_with_childrens_by(self.db.session, status='1', id=str(employee_id))
+
+        if len(employees_db) < 1:
+            resp.status = falcon.HTTP_404
+            resp.media = {
+                'status': True,
+                'message': 'Employee not fount'
+            }
+            return
+
+        employees = [ employee.as_dict_with_children for employee in employees_db ]
+
+        resp.status = falcon.HTTP_200
+        resp.media = {
+            'status': True,
+            'data': employees[0]
+        }
+
     async def on_post(self, req, resp):
         data = await req.get_media()
 
@@ -46,7 +66,7 @@ class EmployeesResource(BaseResource):
             'data': employees_db.as_dict
         }
 
-    async def on_delete(self, req, resp, employee_id):
+    async def on_delete_delete_employee(self, req, resp, employee_id):
         try:
             await EmployeesModel.update(
                 self.db.session,
@@ -67,14 +87,15 @@ class EmployeesResource(BaseResource):
             'status': True,
         }
 
-    async def on_put(self, req, resp, employee_id):
+    async def on_put_put_employee(self, req, resp, employee_id):
 
         data = await req.get_media()
 
         if 'hire_date' in data.keys():
-            data['hire_date'] = datetime.strptime('hire_date', '%Y-%M-%d')
+            data['hire_date'] = datetime.strptime(data.get('hire_date'), '%Y-%M-%d')
 
         try:
+            del data['id']
             await EmployeesModel.update(
                 self.db.session,
                 id=str(employee_id),
