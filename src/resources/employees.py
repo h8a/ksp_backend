@@ -9,9 +9,9 @@ class EmployeesResource(BaseResource):
 
     async def on_get(self, req, resp):
 
-        employees_db = await EmployeesModel.get_list_with_childrens_by(self.db.session, status='1')
+        employees_db = await EmployeesModel.get_list_by(self.db.session, status='1')
 
-        employees = [ employee.as_dict_with_children for employee in employees_db ]
+        employees = [ employee.as_dict for employee in employees_db ]
 
         resp.status = falcon.HTTP_200
         resp.media = {
