@@ -105,9 +105,11 @@ class EmployeesModel(SAModel, Base):
             'salary': self.salary,
             'beneficiaries': [{
                 'id': str(beneficiary.id),
+                'status': beneficiary.status,
                 'name': beneficiary.name,
                 'birthdate': beneficiary.birthdate.strftime('%Y-%M-%d'),
                 'gender': beneficiary.gender,
+                'relationship': beneficiary.relationship
             } for beneficiary in self.employees_beneficiaries]
         }
 
