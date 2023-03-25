@@ -11,7 +11,7 @@ class DatabaseConfig(YamlConfig):
         'connection': Attr('connection', str),
     }
 
-    connection = os.getenv('DB')
+    connection = os.getenv('DB', 'postgresql+asyncpg://test_user:test_password@db:5432/test1')
 
 
 class ServiceConfig(YamlConfig):
@@ -23,9 +23,9 @@ class ServiceConfig(YamlConfig):
     }
 
     host = os.getenv('SERVICE_HOST', '0.0.0.0')
-    port = os.getenv('SERVICE_PORT', 5000)
+    port = int(os.getenv('SERVICE_PORT', 5000))
     log_level = os.getenv('SERVICE_LOG_LEVEL', 'debug')
-    debug = os.getenv('SERVICE_DEBUG', True)
+    debug = bool(os.getenv('SERVICE_DEBUG', True))
 
 
 class ApiConfig(YamlConfig):
