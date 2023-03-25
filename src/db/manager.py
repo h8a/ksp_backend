@@ -13,7 +13,7 @@ class DBManager(object):
     def __init__(self, db, debug=True):
         self.connection = db.connection
         self.engine = create_async_engine(
-            self.connection,
+            self.connection or db.connection,
             connect_args={'timeout': 60},
             echo=debug,
         )

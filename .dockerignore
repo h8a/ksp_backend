@@ -1,0 +1,6 @@
+.env
+.git
+README.md
+__pycache__/*
+example.settings.yml
+.gitignore
